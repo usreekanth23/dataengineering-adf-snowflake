@@ -1,0 +1,38 @@
+{
+	"name": "ds_orderdetail_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_azuresql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SalesOrderDetailID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SalesOrderID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProductID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": "SalesOrderDetail"
+		}
+	}
+}

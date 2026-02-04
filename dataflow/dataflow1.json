@@ -1,0 +1,68 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_orderdetail_sql",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_snowflake_orderDetail",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          SalesOrderDetailID as integer,",
+				"          SalesOrderID as integer,",
+				"          ProductID as integer,",
+				"          ModifiedDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(TIMESTAMP = currentUTC()) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          SALESORDERDETAILID as decimal(38,0),",
+				"          SALESORDERID as decimal(38,0),",
+				"          PRODUCTID as decimal(38,0),",
+				"          MODIFIEDDATE as timestamp,",
+				"          LOADEDDATETIME as timestamp",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          SALESORDERDETAILID = SalesOrderDetailID,",
+				"          SALESORDERID = SalesOrderID,",
+				"          PRODUCTID = ProductID,",
+				"          MODIFIEDDATE = ModifiedDate,",
+				"          LOADEDDATETIME = TIMESTAMP",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

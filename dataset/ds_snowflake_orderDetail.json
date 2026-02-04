@@ -1,0 +1,47 @@
+{
+	"name": "ds_snowflake_orderDetail",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_snowflake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [
+			{
+				"name": "SALESORDERDETAILID",
+				"type": "NUMBER",
+				"precision": 38,
+				"scale": 0
+			},
+			{
+				"name": "SALESORDERID",
+				"type": "NUMBER",
+				"precision": 38,
+				"scale": 0
+			},
+			{
+				"name": "PRODUCTID",
+				"type": "NUMBER",
+				"precision": 38,
+				"scale": 0
+			},
+			{
+				"name": "MODIFIEDDATE",
+				"type": "TIMESTAMP_NTZ",
+				"precision": 0,
+				"scale": 9
+			},
+			{
+				"name": "LOADEDDATETIME",
+				"type": "TIMESTAMP_NTZ",
+				"precision": 0,
+				"scale": 9
+			}
+		],
+		"typeProperties": {
+			"schema": "STAGING",
+			"table": "SALESORDERDETAIL"
+		}
+	}
+}
